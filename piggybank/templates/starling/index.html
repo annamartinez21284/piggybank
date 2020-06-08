@@ -1,0 +1,34 @@
+{% extends "starling/base.html" %}
+
+{% block body %}
+
+<div class="jumbotron" id="jumbo">
+
+  <div class="mb-3">
+    This is a simulation of <a href="https://www.starlingbank.com/">Starling Bank</a>'s Round-up feature.
+    By activating the Round-up feature for a savings Goal on a customer's account, outgoing transactions (payments) out of
+    the customer's bank account will be rounded up and added to a separate category ('Goal') in their account. Visit
+    <a href="https://www.starlingbank.com/features/goals/">Starling Bank</a> for the 'real-life' product.
+  </div>
+
+
+<div class="col-md-5 mb-3">
+  <label for="customer">Customer</label>
+    <div class="input-group mb-3">
+      {% csrf_token %}
+      <select class="custom-select" id="customer" required>
+        <option selected>Choose a sample customer</option>
+        {% for c in customers %}
+        <option value="{{ c.name }}">{{ c.name }}</option>
+        {% endfor %}
+      </select>
+      <div class="invalid-feedback">
+        Please select a customer.
+      </div>
+      <div class="input-group-append">
+        <label class="input-group-text" for="inputGroupSelect02">Choose</label>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
