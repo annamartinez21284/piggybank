@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Customer(models.Model):
   name = models.CharField(max_length=64)
-  customer_id = models.CharField(max_length=64)
+  customer_id = models.CharField(max_length=64, primary_key=True)
   refresh_token = models.CharField(max_length=64)
 
   def __str__(self):

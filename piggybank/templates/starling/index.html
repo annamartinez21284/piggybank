@@ -13,22 +13,27 @@
 
 
 <div class="col-md-5 mb-3">
-  <label for="customer">Customer</label>
-    <div class="input-group mb-3">
-      {% csrf_token %}
-      <select class="custom-select" id="customer" required>
-        <option selected>Choose a sample customer</option>
-        {% for c in customers %}
-        <option value="{{ c.name }}">{{ c.name }}</option>
-        {% endfor %}
-      </select>
-      <div class="invalid-feedback">
-        Please select a customer.
-      </div>
-      <div class="input-group-append">
-        <label class="input-group-text" for="inputGroupSelect02">Choose</label>
-      </div>
-    </div>
+  <label for="customer">To give the simulation a spin, ...</label>
+
+      <form action="{% url 'customer_info' %}" method="post">
+          {% csrf_token %}
+        <div class="input-group mb-3">
+
+          <select class="custom-select" id="customer" name="customer" required>
+            <option selected>... choose a sample customer</option>
+            {% for c in customers %}
+            <option value="{{ c.customer_id }}">{{ c.name }}</option>
+            {% endfor %}
+          </select>
+          <div >
+            <button type="submit" class="btn btn-secondary">Select</button>
+          </div>
+          <div class="invalid-feedback">
+            Please select a customer.
+          </div>
+        </div>
+      </form>
+
   </div>
 </div>
 {% endblock %}
