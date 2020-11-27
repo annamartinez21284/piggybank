@@ -32,7 +32,6 @@ def customer_info(request, customer_id=None):
   print('CUSTOMER ISSSSS', customer)
   # only GBP accounts, in this app simplification: only 1 acct per customer, acct in GBP
   account = Account.objects.filter(accountholder=customer_id, currency="GBP")
-  print('ACCOUNT ISSSSsSSSSSSSSS', account)
   accountUid = account[0].accountUid
   request.session["accountUid"] = accountUid
   print("ACCOUNTUID", accountUid)
@@ -62,8 +61,8 @@ def customer_info(request, customer_id=None):
   if not savingsGoalList:
     # redirect to create savings goal & from there to view all goals
     print(savingsGoalList) #[]
-    return render(request, "starling/create_goal.html", context)
-  #elif goals exist, but no roundup, show all goals
+    return render(request, "starling/show_details.html", contextWithSavings)
+  #elif goals exist, show all goals
 
   return render(request, "starling/show_details.html", contextWithSavings)
 
@@ -84,7 +83,6 @@ def create_goal(request):
     raise Exception("ERROR: API PUT request unsuccessful.")
 
   customer_id = request.session["customer_id"]
-  print("IS CUSTOMER KNOWNNNNNNNNNN", customer_id)
 
   return redirect('customer_info_id', customer_id= customer_id)
 

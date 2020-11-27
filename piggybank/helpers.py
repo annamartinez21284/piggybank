@@ -15,6 +15,9 @@ def get_headers(refresh_token):
   client_secret = os.getenv('CLIENT_SECRET')
   payload = {'refresh_token': refresh_token, 'client_id': client_id, 'client_secret': client_secret, 'grant_type': "refresh_token"}
 
+  # payload = {'access_token': {os.getenv('ACCESS_TOKEN_MAURICE}), 'refresh_token': refresh_token, 'token_type': "Bearer", 'client_id': client_id, 'client_secret': client_secret, 'grant_type': "authorization_code"}
+
+
   res = requests.post(endpoint, data = payload)
   if res.status_code != 200:
     raise Exception("ERROR: API request unsuccessful.")

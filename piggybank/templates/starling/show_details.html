@@ -6,77 +6,78 @@
 
     <div class="mb-3">
 
-    <label for="create" id="createLabel">Customer: {{context.customer.name}} - Account Balance:
+      <label for="create" id="createLabel">Customer: {{context.customer.name}} - Account Balance:</label>
 
-    </label>
+      <h4 class="mb-3" id="create">Savings Goals</h4>
 
-    <h4 class="mb-3" id="create">Savings Goals</h4>
+      <ul>
+      {% for s in savingsGoalList %}
+       <li>
+         <h5>{{s.name}}
+           <a name="delete" type="submit" class="btn btn-tertiary btn-outline-danger" href="{% url 'delete' s.savingsGoalUid %}" value="Delete">Delete</a>
+         </h5>
 
-        <ul>
-        {% for s in savingsGoalList %}
-         <li>
-           <h5>{{s.name}}
-             <a name="delete" type="submit" class="btn btn-tertiary btn-outline-danger" href="{% url 'delete' s.savingsGoalUid %}" value="Delete">Delete</a>
-           </h5>
+           <a id="{{s.savingsGoalUid}}">Target: 
+            <script balance="{{s.target.minorUnits}}" place="{{s.savingsGoalUid}}">
+                 var value = document.currentScript.getAttribute('balance');
+                 var place = document.currentScript.getAttribute('place');
+                 function formatNumber (value) {
+                   var v = value/100;
+                   return Number(v).toLocaleString('en-US', { style: 'currency', currency: 'GBP' });
+                 };
+                 document.getElementById(place).append( formatNumber(value));
+             </script>
+           </a>
 
-             <a id="{{s.savingsGoalUid}}">Target:
-              <script balance="{{s.target.minorUnits}}" place="{{s.target}}">
-                   var value = document.currentScript.getAttribute('balance');
-                   var place = document.currentScript.getAttribute('place');
-                   function formatNumber (value) {
-                     var v = value/100;
-                     return Number(v).toLocaleString('en-US', { style: 'currency', currency: 'GBP' });
-                   };
-                   document.getElementById(place).append( formatNumber(value));
-               </script>
-             </a>
+           <br>
 
-             <br>
+         <a id="{{s.name}}"> Saved:
+           <script balance="{{s.totalSaved.minorUnits}}" place="{{s.name}}">
+                var value = document.currentScript.getAttribute('balance');
+                var place = document.currentScript.getAttribute('place');
+                function formatNumber (value) {
+                  var v = value/100;
+                  return Number(v).toLocaleString('en-US', { style: 'currency', currency: 'GBP' });
+                };
+                document.getElementById(place).append( formatNumber(value));
+            </script>
+                       <a>({{s.savedPercentage}} %)</a>
+          </a>
 
-           <a id="{{s.name}}"> Saved:
-             <script balance="{{s.totalSaved.minorUnits}}" place="{{s.name}}">
-                  var value = document.currentScript.getAttribute('balance');
-                  var place = document.currentScript.getAttribute('place');
-                  function formatNumber (value) {
-                    var v = value/100;
-                    return Number(v).toLocaleString('en-US', { style: 'currency', currency: 'GBP' });
-                  };
-                  document.getElementById(place).append( formatNumber(value));
-              </script>
-                         <a>({{s.savedPercentage}} %)</a>
-            </a>
+       </li>
 
-         </li>
-
-        {% endfor %}
+      {% endfor %}
 
 
-        </ul>
-        <form action="{% url 'create_goal' %}" method="post">
-          {% csrf_token %}
+      </ul>
 
-      <div class="col-md-6 mb-3">
-              <label for="goalName">Goal name</label>
-              <input type="text" class="form-control" id="goalName" name="goalName" placeholder="e.g. Trip to Paris" value="" required>
-        <div class="invalid-feedback">
-          Goal name is required.
-        </div>
-      </div>
+      <form action="{% url 'create_goal' %}" method="post">
+                  {% csrf_token %}
 
-      <div class="col-md-6 mb-3">
-              <label for="goal">Goal (£)</label>
-              <input type="currency" min="0"  class="form-control" id="goal" name="goal" placeholder="£0.00" required>
-              <!-- https://stackoverflow.com/questions/34057595/allow-2-decimal-places-in-input-type-number/34057860-->
+              <div class="col-md-6 mb-3">
+                  <label for="goalName">Goal name</label>
+                  <input type="text" class="form-control" id="goalName" name="goalName" placeholder="e.g. Trip to Paris" value="" required>
+                  <div class="invalid-feedback">
+                    Goal name is required.
+                  </div>
+              </div>
 
-        <div class="invalid-feedback">
-          Goal is required.
-        </div>
-      </div>
-      <div class="col-md-6 mb-3">
-        <button type="submit" class="btn btn-secondary btn-block" value="Add Goal">Add Savings Goal</button>
-      </div>
+              <div class="col-md-6 mb-3">
+                  <label for="goal">Goal (£)</label>
+                  <input type="currency" min="0"  class="form-control" id="goal" name="goal" placeholder="£0.00" required>
+                  <!-- https://stackoverflow.com/questions/34057595/allow-2-decimal-places-in-input-type-number/34057860-->
+
+                  <div class="invalid-feedback">
+                    Goal is required.
+                  </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                  <button type="submit" class="btn btn-secondary btn-block" value="Add Goal">Add Savings Goal</button>
+              </div>
+
+
+      </form>
     </div>
-  </form>
 </div>
 
 
